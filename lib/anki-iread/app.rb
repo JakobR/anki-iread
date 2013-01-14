@@ -42,6 +42,11 @@ module AnkiIRead
 
       @page_source = response.body
 
+      # Without this line, sometimes this error occurs when writing the output:
+      # "output error : unknown encoding ASCII-8BIT"
+      # TODO: Fix this properly!
+      @page_source.force_encoding 'UTF-8'
+
       pipeline = HTML::Pipeline.new [
         ImageToAnkiFilter
       ], {
