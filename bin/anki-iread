@@ -46,7 +46,9 @@ class AnkiIReadCLI < Thor
       html_output = app.run
 
       if options[:clipboard]
-        # TODO
+        require 'clipboard'
+        Clipboard.copy html_output
+        $stderr.puts "Done. Output was written to clipboard."
       else
         $stdout.write html_output
       end

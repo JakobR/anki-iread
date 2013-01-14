@@ -17,4 +17,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'thor', '~> 0.16.0'
   s.add_dependency 'html-pipeline', '~> 0.0.6'
   s.add_dependency 'mime-types', '~> 1.19'
+  s.add_dependency 'clipboard', '~> 1.0.1'
 end
