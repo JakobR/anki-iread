@@ -26,16 +26,12 @@ module AnkiIRead
 
         type = MIME::Types[response.content_type].first
         unless type && type.media_type == "image"
-          $stderr.puts ' => ERROR'
-          $stderr.puts ' => URL referenced by <img> tag is not an image!'
-          exit 1 # ...
+          raise UnsupportedMIMETypeError, "The file at #{target_uri} (referenced by an <img> tag) is not an image!"
         end
 
         extension = type.extensions.first
         unless extension
-          $stderr.puts ' => ERROR'
-          $stderr.puts ' => No valid file extension available!'
-          exit 1 # ...
+          raise UnsupportedMIMETypeError, "There is no known file extension for MIME type '#{type}'."
         end
 
         filename = create_image_file(response.body, extension)

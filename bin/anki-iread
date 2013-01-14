@@ -63,6 +63,10 @@ class AnkiIReadCLI < Thor
     rescue AnkiIRead::ResponseIsNotHTMLError
       $stderr.puts "ERROR: Server didn't respond with 'text/html' contents!"
       exit 1
+
+    rescue AnkiIRead::UnsupportedMIMETypeError => e
+      $stderr.puts "ERROR: #{e.message}"
+      exit 1
     end
 
   end

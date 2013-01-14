@@ -10,4 +10,7 @@ module AnkiIRead
   class ResponseIsNotHTMLError < StandardError
   end
 
+  class UnsupportedMIMETypeError < StandardError
+  end
+
 end
