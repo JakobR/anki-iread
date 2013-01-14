@@ -1,8 +1,10 @@
 #!/usr/bin/env ruby
 
+require 'bundler/setup'
 require 'thor'
+require 'anki-iread'
 
-class AnkiIRead < Thor
+class AnkiIReadCLI < Thor
   class_option :verbose,
     type: :boolean,
     aliases: '-v',
@@ -38,7 +40,18 @@ class AnkiIRead < Thor
   LONGDESC
   def get(uri)
 
+    begin
+
+      app = AnkiIRead::App.new(uri)
+      app.run
+
+    rescue AnkiIRead::WrongURISchemeError
+      $stderr.puts "ERROR: Supports only HTTP and HTTPS URIs."
+      $stderr.puts "Did you include the http:// or https:// scheme in the <url> parameter?"
+      exit 1
+    end
+
   end
 end
 
-AnkiIRead.start(ARGV)
+AnkiIReadCLI.start(ARGV)
