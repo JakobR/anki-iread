@@ -51,21 +51,8 @@ class AnkiIReadCLI < Thor
         $stdout.write html_output
       end
 
-    rescue AnkiIRead::WrongURISchemeError
-      $stderr.puts "ERROR: Supports only HTTP and HTTPS URIs."
-      $stderr.puts "Did you include the http:// or https:// scheme in the <url> parameter?"
-      exit 1
-
-    rescue AnkiIRead::RequestUnsuccessfulError => e
-      $stderr.puts "ERROR: #{e.message}"
-      exit 1
-
-    rescue AnkiIRead::ResponseIsNotHTMLError
-      $stderr.puts "ERROR: Server didn't respond with 'text/html' contents!"
-      exit 1
-
-    rescue AnkiIRead::UnsupportedMIMETypeError => e
-      $stderr.puts "ERROR: #{e.message}"
+    rescue AnkiIRead::Error => e
+      $stderr.puts "ERROR - #{e.class}: #{e.message}"
       exit 1
     end
 

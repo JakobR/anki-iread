@@ -1,16 +1,19 @@
 
 module AnkiIRead
 
-  class WrongURISchemeError < StandardError
+  class Error < StandardError
   end
 
-  class RequestUnsuccessfulError < StandardError
+  class WrongURISchemeError < AnkiIRead::Error
   end
 
-  class ResponseIsNotHTMLError < StandardError
+  class RequestUnsuccessfulError < AnkiIRead::Error
   end
 
-  class UnsupportedMIMETypeError < StandardError
+  class ResponseIsNotHTMLError < AnkiIRead::Error
+  end
+
+  class UnsupportedMIMETypeError < AnkiIRead::Error
   end
 
 end

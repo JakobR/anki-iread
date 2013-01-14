@@ -17,7 +17,7 @@ module AnkiIRead
       end
 
       unless the_uri.kind_of? URI::HTTP
-        raise WrongURISchemeError
+        raise WrongURISchemeError, "Supports only HTTP and HTTPS URIs.\nDid you include the http:// or https:// scheme in the <url> parameter?"
       end
 
       @uri = the_uri
@@ -32,7 +32,7 @@ module AnkiIRead
       end
 
       unless response.content_type == "text/html"
-        raise ResponseIsNotHTMLError
+        raise ResponseIsNotHTMLError, "Server didn't respond with 'text/html' contents."
       end
 
       @page_source = response.body
