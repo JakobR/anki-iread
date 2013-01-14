@@ -1,5 +1,6 @@
 
 require 'uri'
+require 'net/http'
 
 module AnkiIRead
   class App
@@ -17,6 +18,17 @@ module AnkiIRead
     end
 
     def run
+      response = Net::HTTP.get_response(@uri)
+
+      unless response.is_a? Net::HTTPSuccess
+        raise ResponseIsNotSuccessError
+      end
+
+      unless response.content_type == "text/html"
+        raise ResponseIsNotHTMLError
+      end
+
+      @page_source = response.body
     end
 
   end

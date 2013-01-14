@@ -55,6 +55,14 @@ class AnkiIReadCLI < Thor
       $stderr.puts "ERROR: Supports only HTTP and HTTPS URIs."
       $stderr.puts "Did you include the http:// or https:// scheme in the <url> parameter?"
       exit 1
+
+    rescue AnkiIRead::ResponseIsNotSuccessError
+      $stderr.puts "ERROR: Could not get document from server!"
+      exit 1
+
+    rescue AnkiIRead::ResponseIsNotHTMLError
+      $stderr.puts "ERROR: Server didn't respond with 'text/html' contents!"
+      exit 1
     end
 
   end
