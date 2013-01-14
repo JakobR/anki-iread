@@ -10,7 +10,7 @@ module AnkiIRead
       doc.search('img').each do |element|
 
         unless element['src']
-          log 'img without src attribute!'
+          log 'img without src attribute!', false
           exit 1 # uhhhh... really?
         end
 
@@ -73,8 +73,8 @@ module AnkiIRead
       end
     end # create_image_file
 
-    def log(message)
-      context[:logger].call(message) if context[:logger]
+    def log(message, verbose=true)
+      context[:logger].call(message, verbose) if context[:logger]
     end
   end
 end

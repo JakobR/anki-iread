@@ -44,8 +44,8 @@ class AnkiIReadCLI < Thor
 
       app = AnkiIRead::App.new(uri, options[:media_folder])
 
-      app.logger = lambda do |message|
-        $stderr.puts message
+      app.logger = lambda do |message, verbose|
+        $stderr.puts message unless verbose && !options[:verbose]
       end
 
       html_output = app.run
