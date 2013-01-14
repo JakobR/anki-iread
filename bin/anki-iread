@@ -43,7 +43,13 @@ class AnkiIReadCLI < Thor
     begin
 
       app = AnkiIRead::App.new(uri)
-      app.run
+      html_output = app.run
+
+      if options[:clipboard]
+        # TODO
+      else
+        $stdout.write html_output
+      end
 
     rescue AnkiIRead::WrongURISchemeError
       $stderr.puts "ERROR: Supports only HTTP and HTTPS URIs."
