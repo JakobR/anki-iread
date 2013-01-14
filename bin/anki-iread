@@ -8,7 +8,8 @@ class AnkiIReadCLI < Thor
   class_option :verbose,
     type: :boolean,
     aliases: '-v',
-    default: false
+    default: false,
+    desc: "Print detailed output to STDERR"
 
   option :media_folder,
     type: :string,
@@ -20,6 +21,10 @@ class AnkiIReadCLI < Thor
     aliases: '-c',
     default: false,
     desc: "Copy the HTML output to the clipboard instead of printing it to the standard output"
+  option :no_rollback,
+    type: :boolean,
+    default: false,
+    desc: "By default, anki-iread will roll back changes if an error occurs. Specify this option to prevent it from doing that."
   desc 'get <url>', 'Loads the web page at <url>, puts the referenced images in the anki media folder and returns the HTML code with img sources adjusted for use in anki.'
   long_desc <<-LONGDESC
     `anki-iread get` will load the web page at the given URI.
@@ -60,6 +65,7 @@ class AnkiIReadCLI < Thor
 
     rescue AnkiIRead::Error => e
       $stderr.puts "ERROR - #{e.class}: #{e.message}"
+      app.rollback unless options[:no_rollback]
       exit 1
     end
 

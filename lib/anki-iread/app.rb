@@ -27,6 +27,7 @@ module AnkiIRead
 
       @uri = the_uri
       @media_folder = the_media_folder
+      @created_files = []
     end # initialize
 
     def run
@@ -53,11 +54,29 @@ module AnkiIRead
       ], {
         uri: uri,
         media_folder: media_folder,
-        logger: logger || lambda { |_,_| } # Don't log anything by default
+        logger: logger || lambda { |_,_| }, # Don't log anything by default
+        on_file_creation: lambda { |file_name| @created_files << full_path }
       }
 
       @html_output = pipeline.to_html(page_source)
     end # run
+
+    def rollback
+      log "Rolling back..."
+      @created_files.each do |file_name|
+        log "Deleting file #{file_name}"
+        begin
+          File.delete file_name
+        rescue => e
+          log "ERROR - #{e.class}: #{e.message}", false
+        end
+      end
+      @created_files = []
+    end # rollback
+
+    def log(message, verbose=true)
+      logger.call(message, verbose) if logger
+    end
 
   end
 end

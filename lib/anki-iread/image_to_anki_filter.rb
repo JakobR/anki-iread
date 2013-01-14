@@ -66,6 +66,7 @@ module AnkiIRead
         else
           log " => ok"
           File.write(full_path, contents)
+          on_file_creation full_path
           return filename
         end
 
@@ -75,6 +76,10 @@ module AnkiIRead
 
     def log(message, verbose=true)
       context[:logger].call(message, verbose) if context[:logger]
+    end
+
+    def on_file_creation(file_name)
+      context[:on_file_creation].call(file_name) if context[:on_file_creation]
     end
   end
 end
