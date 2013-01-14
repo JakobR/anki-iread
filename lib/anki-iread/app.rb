@@ -11,6 +11,9 @@ module AnkiIRead
     attr_reader :page_source
     attr_reader :html_output
 
+    # A lambda with one parameter (the message which is to be logged)
+    attr_accessor :logger
+
     def initialize(the_uri, the_media_folder)
       if the_uri.is_a? String
         the_uri = URI(the_uri)
@@ -41,7 +44,8 @@ module AnkiIRead
         ImageToAnkiFilter
       ], {
         uri: uri,
-        media_folder: media_folder
+        media_folder: media_folder,
+        logger: logger || lambda { |message| } # Don't log anything by default
       }
 
       @html_output = pipeline.to_html(page_source)

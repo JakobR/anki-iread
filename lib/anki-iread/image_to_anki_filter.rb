@@ -10,13 +10,13 @@ module AnkiIRead
       doc.search('img').each do |element|
 
         unless element['src']
-          $stderr.puts 'img without src attribute!'
+          log 'img without src attribute!'
           exit 1 # uhhhh... really?
         end
 
         target_uri = context[:uri] + element['src']
 
-        $stderr.puts "Downloading image: #{target_uri}"
+        log "Downloading image: #{target_uri}"
 
         response = Net::HTTP.get_response(target_uri)
 
@@ -35,7 +35,7 @@ module AnkiIRead
         end
 
         filename = create_image_file(response.body, extension)
-        $stderr.puts " => filename: #{filename}"
+        log " => filename: #{filename}"
 
         element['src'] = filename
       end
@@ -54,17 +54,17 @@ module AnkiIRead
         counter_str = (counter > 0) ? "-#{counter}" : ''
         filename = "iread-#{digest}#{counter_str}.#{extension}"
         full_path = ::File.expand_path(filename, context[:media_folder])
-        $stderr.puts " => trying full path: #{full_path}"
+        log " => trying full path: #{full_path}"
 
         # Don't overwrite existing files
         # Don't save duplicates
         if File.exists? full_path
           if FileUtils.compare_file_to_string(full_path, contents)
-            $stderr.puts " => file exists, ok"
+            log " => file exists, ok"
             return filename
           end
         else
-          $stderr.puts " => ok"
+          log " => ok"
           File.write(full_path, contents)
           return filename
         end
@@ -73,5 +73,8 @@ module AnkiIRead
       end
     end # create_image_file
 
+    def log(message)
+      context[:logger].call(message) if context[:logger]
+    end
   end
 end

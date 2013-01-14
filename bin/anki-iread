@@ -43,6 +43,11 @@ class AnkiIReadCLI < Thor
     begin
 
       app = AnkiIRead::App.new(uri, options[:media_folder])
+
+      app.logger = lambda do |message|
+        $stderr.puts message
+      end
+
       html_output = app.run
 
       if options[:clipboard]
