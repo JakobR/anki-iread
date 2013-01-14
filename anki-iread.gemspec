@@ -16,4 +16,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'bundler', '>= 1.2.3'
   s.add_dependency 'thor', '~> 0.16.0'
   s.add_dependency 'html-pipeline', '~> 0.0.6'
+  s.add_dependency 'mime-types', '~> 1.19'
 end
