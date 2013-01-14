@@ -1,0 +1,44 @@
+#!/usr/bin/env ruby
+
+require 'thor'
+
+class AnkiIRead < Thor
+  class_option :verbose,
+    type: :boolean,
+    aliases: '-v',
+    default: false
+
+  option :'media-folder',
+    type: :string,
+    aliases: '-m',
+    default: "~/Documents/Anki/User 1/collection.media",
+    desc: "Specify the path to the Anki media folder"
+  option :clipboard,
+    type: :boolean,
+    aliases: '-c',
+    default: false,
+    desc: "Copy the HTML output to the clipboard instead of printing it to the standard output"
+  desc 'get <url>', 'Loads the web page at <url>, puts the referenced images in the anki media folder and returns the HTML code with img sources adjusted for use in anki.'
+  long_desc <<-LONGDESC
+    `anki-iread get` will load the web page at the given URI.
+    It should point to an HTML document.
+
+    The programm will:
+    \x5 1. Load all the images referenced by <img> tags
+    \x5 2. Put the images in the anki media folder
+    \x5 3. Adjust the 'src' attribute on <img> tags for Anki
+    \x5 4. Load any referenced CSS stylesheets and
+        include them directly in the HTML source code
+        (either using data-uris or as included CSS)
+    \x5 5. Print the adjusted HTML to standard output
+
+    See the option descriptions above for further information.
+
+    TODO: Examples.
+  LONGDESC
+  def get(uri)
+
+  end
+end
+
+AnkiIRead.start(ARGV)
