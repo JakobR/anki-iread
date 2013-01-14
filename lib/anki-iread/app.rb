@@ -48,7 +48,8 @@ module AnkiIRead
       @page_source.force_encoding 'UTF-8'
 
       pipeline = HTML::Pipeline.new [
-        ImageToAnkiFilter
+        ImageToAnkiFilter,
+        EmbedStylesheetFilter
       ], {
         uri: uri,
         media_folder: media_folder,
