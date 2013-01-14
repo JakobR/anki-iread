@@ -8,11 +8,12 @@ Gem::Specification.new do |s|
   s.email       = 'git@jakobrath.eu'
   s.homepage    = 'https://github.com/JakobR/anki-iread'
 
-  s.files         = Dir["bin/*"] + Dir["{lib,test}/**/*.rb"] + %w[README.md]
+  s.files         = Dir["bin/*"] + Dir["{lib,test}/**/*.rb"] + %w[README.md Gemfile Gemfile.lock]
   s.test_files    = s.files.select { |path| path =~ /^test\/.*_test.rb/ }
   s.executables   = %w[anki-iread]
   s.require_paths = %w[lib]
 
+  s.add_dependency 'bundler', '>= 1.2.3'
   s.add_dependency 'thor', '~> 0.16.0'
   s.add_dependency 'html-pipeline', '~> 0.0.6'
 end

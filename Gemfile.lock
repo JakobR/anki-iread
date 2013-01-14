@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     anki-iread (0.0.1)
+      bundler (>= 1.2.3)
       html-pipeline (~> 0.0.6)
       thor (~> 0.16.0)
 
