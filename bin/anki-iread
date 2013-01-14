@@ -10,7 +10,7 @@ class AnkiIReadCLI < Thor
     aliases: '-v',
     default: false
 
-  option :'media-folder',
+  option :media_folder,
     type: :string,
     aliases: '-m',
     default: "~/Documents/Anki/User 1/collection.media",
@@ -42,7 +42,7 @@ class AnkiIReadCLI < Thor
 
     begin
 
-      app = AnkiIRead::App.new(uri)
+      app = AnkiIRead::App.new(uri, options[:media_folder])
       html_output = app.run
 
       if options[:clipboard]
@@ -56,8 +56,8 @@ class AnkiIReadCLI < Thor
       $stderr.puts "Did you include the http:// or https:// scheme in the <url> parameter?"
       exit 1
 
-    rescue AnkiIRead::ResponseIsNotSuccessError
-      $stderr.puts "ERROR: Could not get document from server!"
+    rescue AnkiIRead::RequestUnsuccessfulError => e
+      $stderr.puts "ERROR: #{e.message}"
       exit 1
 
     rescue AnkiIRead::ResponseIsNotHTMLError

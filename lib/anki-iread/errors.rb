@@ -4,7 +4,7 @@ module AnkiIRead
   class WrongURISchemeError < StandardError
   end
 
-  class ResponseIsNotSuccessError < StandardError
+  class RequestUnsuccessfulError < StandardError
   end
 
   class ResponseIsNotHTMLError < StandardError
