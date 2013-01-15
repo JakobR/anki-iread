@@ -31,6 +31,15 @@ module AnkiIRead
     end # initialize
 
     def run
+      # TODO: This doesn't really belong here... Refactor appropriately.
+      if ExtractFromWikipediaFilter.is_applicable_to uri
+        if !uri.query || uri.query.empty?
+          uri.query = "action=render"
+        else
+          uri.query = "action=render&#{uri}" unless uri.query.include?("action=render")
+        end
+      end
+
       response = Net::HTTP.get_response(uri)
 
       unless response.is_a? Net::HTTPSuccess
@@ -49,13 +58,14 @@ module AnkiIRead
       @page_source.force_encoding 'UTF-8'
 
       pipeline = HTML::Pipeline.new [
+        ExtractFromWikipediaFilter,
         ImageToAnkiFilter,
         EmbedStylesheetFilter
       ], {
         uri: uri,
         media_folder: media_folder,
         logger: logger || lambda { |_,_| }, # Don't log anything by default
-        on_file_creation: lambda { |file_name| @created_files << full_path }
+        on_file_creation: lambda { |file_name| @created_files << file_name }
       }
 
       @html_output = pipeline.to_html(page_source)
