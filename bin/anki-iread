@@ -65,7 +65,7 @@ class AnkiIReadCLI < Thor
 
     rescue AnkiIRead::Error => e
       $stderr.puts "ERROR - #{e.class}: #{e.message}"
-      app.rollback unless options[:no_rollback]
+      app.rollback if app && !options[:no_rollback]
       exit 1
     end
 
