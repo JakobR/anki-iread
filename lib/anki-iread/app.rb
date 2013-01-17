@@ -60,7 +60,8 @@ module AnkiIRead
       pipeline = HTML::Pipeline.new [
         ExtractFromWikipediaFilter,
         ImageToAnkiFilter,
-        EmbedStylesheetFilter
+        EmbedStylesheetFilter,
+        AddSourceFilter
       ], {
         uri: uri,
         media_folder: media_folder,
