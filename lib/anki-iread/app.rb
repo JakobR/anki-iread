@@ -18,7 +18,7 @@ module AnkiIRead
 
     def initialize(the_uri, the_media_folder)
       if the_uri.is_a? String
-        the_uri = URI(the_uri)
+        the_uri = URI(URI.encode(the_uri))
       end
 
       unless the_uri.kind_of? URI::HTTP
