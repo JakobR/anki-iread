@@ -5,6 +5,8 @@ require 'thor'
 require 'anki-iread'
 
 class AnkiIReadCLI < Thor
+  default_task :get
+
   class_option :verbose,
     type: :boolean,
     aliases: '-v',

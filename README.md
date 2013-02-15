@@ -5,4 +5,4 @@ Tools to help with [Incremental Reading](http://www.supermemo.com/help/read.htm)
 
 ## Usage
 
-Run `anki-iread help get` for information on usage and a list of the various options available.
+Run `anki-iread help` and `anki-iread help get` for information on usage and a list of the various options available.
